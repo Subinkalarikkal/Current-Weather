@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		weather Forcasting
+	</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body align=center  >
+      <div class="card">
+         <h1> Weather Forcasting </h1>
+	<input id="place"></input>
+	<button id="get"> Weather Condition</button>
+	<div id="weather" class="name"style="font-size:120%"></div>
+</div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#get").click(function(){
+				var place = $("#place").val();
+				var pass = 'dbe31a0f32a5237681693ecd52bc449a';
+
+				$.ajax({
+					url:'http://api.openweathermap.org/data/2.5/weather',
+					datatype:'json',
+					type:'GET',
+					data:{q:place, appid:pass, units:'metric'},
+
+				    success: function(as){
+				    	var result = '';
+				    	$.each(as.weather,function(index, val){
+				    		result += '<p><b>' + as.name + "</b><img src=" + val.icon + ".png></p>"+ "                                                              Temperature:  " +
+				    		as.main.temp + '&deg;C '+"<p>Climate:  "+ val.main + ", " + 
+				    		val.description
+						});
+						$("#weather").html(result);
+				    }
+				});
+			});
+		});
+	</script>
+</body>
